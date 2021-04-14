@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -18,19 +19,29 @@ public class MainViewController {
 	ConnectionApi apiController = new ConnectionApi();
 	
     @FXML
-    private ComboBox<String> cbbLine;
+    public ComboBox<String> cbbLine;
     
     @FXML
-    private TitledPane tpModel;
+    public TitledPane tpModel;
     
     @FXML
-    private TitledPane tpLine;
+    public TitledPane tpLine;
 
     @FXML
-    private TreeView<String> treeModel;
+    public TreeView<String> treeModel;
+    
+    @FXML
+    public TextField tf1;
 
     @FXML
-    void enableModel(ActionEvent event) {
+    public TextField tf2;
+
+    @FXML
+    public TextField tf3;
+
+
+    @FXML
+    public void enableModel(ActionEvent event) {
     	if(cbbLine.getSelectionModel().getSelectedItem() != null) {
     		setupTreeModel();
     		tpModel.setDisable(false);
@@ -38,13 +49,13 @@ public class MainViewController {
     }
 
     @FXML
-    private void initialize() {
+    public void initialize() {
     	setupCbbLine();
     	tpModel.setDisable(true);
     }
     
     @FXML
-    void resetSelection(ActionEvent event) {
+    public void resetSelection(ActionEvent event) {
     	initialize();
     	tpLine.setExpanded(false);
     	tpModel.setExpanded(false);
@@ -53,8 +64,9 @@ public class MainViewController {
     
     List<LineModelEntity> listLineModel = apiController.APIGet();
 	ArrayList<String> listLinha = new ArrayList<String>();
+	
     
-    private void setupCbbLine(){
+    public void setupCbbLine(){
     	for(LineModelEntity listLine : listLineModel) {
     		if(!listLinha.contains(listLine.getLinha())) {
     			listLinha.add(listLine.getLinha());
@@ -62,10 +74,11 @@ public class MainViewController {
     	}
     	
     	cbbLine.setItems(FXCollections.observableArrayList(listLinha));
+    	listCat.clear();
     }
     
-    private void setupTreeModel() {
-    	ArrayList<String> listCat = new ArrayList<String>();
+    ArrayList<String> listCat = new ArrayList<String>();
+    public void setupTreeModel() {
     	
 		TreeItem<String> root = new TreeItem<String>(cbbLine.getSelectionModel().getSelectedItem());
 		treeModel.setRoot(root);
@@ -88,4 +101,32 @@ public class MainViewController {
 			}
 		}
     }
+
+    @FXML
+    public void tf1action(ActionEvent event) {
+    	if(!tf2.getText().isEmpty()) {
+    		int somatf = soma(tf1.getText(),tf2.getText());
+    		tf3.setText(Integer.toString(somatf));
+    	}
+    	else{
+    		tf3.setText(tf1.getText());
+    	}
+    }
+    
+   
+    @FXML
+    public void tf2action(ActionEvent event) {
+    	if(!tf1.getText().isEmpty()) {
+    		int somatf = soma(tf1.getText(),tf2.getText());
+    		tf3.setText(Integer.toString(somatf));
+    	}
+    	else{
+    		tf3.setText(tf2.getText());
+    	}
+    }
+    
+    int soma(String a, String b) {
+    	return Integer.parseInt(a)+Integer.parseInt(b);
+    }
+
 }
