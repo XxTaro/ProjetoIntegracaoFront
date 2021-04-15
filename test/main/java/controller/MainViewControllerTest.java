@@ -24,10 +24,6 @@ public class MainViewControllerTest extends ApplicationTest {
     @Before
     public void initTest() {
         mvc = spy(MainViewController.class);
-
-        mvc.tf1 = new TextField();
-        mvc.tf2 = new TextField();
-        mvc.tf3 = new TextField();
         
         mvc.tpModel = new TitledPane();
         mvc.tpLine = new TitledPane();
@@ -40,81 +36,6 @@ public class MainViewControllerTest extends ApplicationTest {
         mvc = null;
 
     }
-	
-	@Test
-	public void testTf1action0() {
-		//mvc.tf2.setText("523");
-		mvc.tf1.setText("895");
-		mvc.tf1action(null);
-		assertEquals("895", mvc.tf3.getText());
-	}
-	
-	@Test
-	public void testTf1action1() {
-		mvc.tf2.setText("523");
-		mvc.tf1.setText("895");
-		mvc.tf1action(null);
-		assertEquals("1418", mvc.tf3.getText());
-	}
-	@Test
-	public void testTf1action2() {
-		//mvc.tf2.setText("523");
-		//mvc.tf1.setText("895");
-		mvc.tf1action(null);
-		assertEquals("", mvc.tf3.getText());
-	}
-
-	@Test
-	public void testTf2action0() {
-		mvc.tf2.setText("523");
-		//mvc.tf1.setText("895");
-		mvc.tf2action(null);
-		assertEquals("523", mvc.tf3.getText());
-	}
-	
-	@Test
-	public void testTf2action1() {
-		mvc.tf2.setText("523");
-		mvc.tf1.setText("895");
-		mvc.tf2action(null);
-		assertEquals("1418", mvc.tf3.getText());
-	}
-	
-	@Test
-	public void testTf2action2() {
-		//mvc.tf2.setText("523");
-		//mvc.tf1.setText("895");
-		mvc.tf2action(null);
-		assertEquals("", mvc.tf3.getText());
-	}
-
-	@Test
-	public void testSoma0() {
-		mvc.tf1.setText("2");
-		mvc.tf2.setText("8");
-		assertEquals(10, mvc.soma(mvc.tf1.getText(), mvc.tf2.getText()));
-	}
-	
-	@Test
-	public void testSoma1() {
-		mvc.tf1.setText("-85");
-		mvc.tf2.setText("-90");
-		assertEquals(-175, mvc.soma(mvc.tf1.getText(), mvc.tf2.getText()));
-	}
-	
-	@Test
-	public void testSoma3() {
-		mvc.tf1.setText(Integer.toString(Integer.MAX_VALUE));
-		mvc.tf2.setText("0");
-		assertEquals(2147483647, mvc.soma(mvc.tf1.getText(), mvc.tf2.getText()));
-	}
-	
-	@Test
-	public void testSoma4() {
-		mvc.tf1.setText(Integer.toString(Integer.MIN_VALUE));
-		mvc.tf2.setText("0");
-		assertEquals(-2147483648, mvc.soma(mvc.tf1.getText(), mvc.tf2.getText()));
-	}
 	
 	//TESTES FUNÇÕES
 	
@@ -188,9 +109,15 @@ public class MainViewControllerTest extends ApplicationTest {
 	}
 	
 	@Test
-	public void testSetupCbbLine1() {
+	public void testSetupCbbLine2() {
 		mvc.setupCbbLine();
 		assertEquals(false, mvc.cbbLine.getItems().isEmpty());
+	}
+	
+	@Test
+	public void testSetupCbbLine3() {
+		mvc.setupCbbLine();
+		assertEquals(true, mvc.listCat.isEmpty());
 	}
 	
 	@Test
@@ -209,6 +136,7 @@ public class MainViewControllerTest extends ApplicationTest {
 	
 	@Test
 	public void testSetupTreeModelCat() {
+		PowerMockito.doNothing().when(mvc).setupCbbLine();
 		mvc.cbbLine.getSelectionModel().select("Ares");
 		mvc.setupTreeModel();
 		assertEquals(false, mvc.listCat.isEmpty());
@@ -216,6 +144,7 @@ public class MainViewControllerTest extends ApplicationTest {
 	
 	@Test
 	public void testSetupTreeModelCat2() {
+		PowerMockito.doNothing().when(mvc).setupCbbLine();
 		mvc.cbbLine.getSelectionModel().select("Ares");
 		mvc.setupTreeModel();
 		assertEquals(2, mvc.listCat.size());
@@ -223,6 +152,7 @@ public class MainViewControllerTest extends ApplicationTest {
 	
 	@Test
 	public void testSetupTreeModelCat3() {
+		PowerMockito.doNothing().when(mvc).setupCbbLine();
 		mvc.cbbLine.getSelectionModel().select("Zeus");
 		mvc.setupTreeModel();
 		assertEquals(false, mvc.listCat.isEmpty());
@@ -230,6 +160,7 @@ public class MainViewControllerTest extends ApplicationTest {
 
 	@Test
 	public void testSetupTreeModelCat4() {
+		PowerMockito.doNothing().when(mvc).setupCbbLine();
 		mvc.cbbLine.getSelectionModel().select("Zeus");
 		mvc.setupTreeModel();
 		assertEquals(2, mvc.listCat.size());
@@ -331,6 +262,12 @@ public class MainViewControllerTest extends ApplicationTest {
 		mvc.cbbLine.getSelectionModel().select("Zeus");
 		mvc.setupTreeModel();
 		assertEquals("Zeus 8023-2,5", mvc.treeModel.getRoot().getChildren().get(1).getChildren().get(0).getValue());
+	}
+	
+	@Test
+	public void testSetupTreeModelSetupCbbLine() {
+		mvc.setupTreeModel();
+		verify(mvc, times(1)).setupCbbLine();
 	}
 	
 }

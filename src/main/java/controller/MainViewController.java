@@ -29,16 +29,6 @@ public class MainViewController {
 
     @FXML
     public TreeView<String> treeModel;
-    
-    @FXML
-    public TextField tf1;
-
-    @FXML
-    public TextField tf2;
-
-    @FXML
-    public TextField tf3;
-
 
     @FXML
     public void enableModel(ActionEvent event) {
@@ -102,32 +92,4 @@ public class MainViewController {
 		}
 		setupCbbLine();
     }
-
-    @FXML
-    public void tf1action(ActionEvent event) {
-    	if(!tf2.getText().isEmpty()) {
-    		int somatf = soma(tf1.getText(),tf2.getText());
-    		tf3.setText(Integer.toString(somatf));
-    	}
-    	else{
-    		tf3.setText(tf1.getText());
-    	}
-    }
-    
-   
-    @FXML
-    public void tf2action(ActionEvent event) {
-    	if(!tf1.getText().isEmpty()) {
-    		int somatf = soma(tf1.getText(),tf2.getText());
-    		tf3.setText(Integer.toString(somatf));
-    	}
-    	else{
-    		tf3.setText(tf2.getText());
-    	}
-    }
-    
-    int soma(String a, String b) {
-    	return Integer.parseInt(a)+Integer.parseInt(b);
-    }
-
 }
