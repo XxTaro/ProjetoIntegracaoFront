@@ -100,6 +100,7 @@ public class MainViewController {
 				}
 			}
 		}
+		setupCbbLine();
     }
 
     @FXML
